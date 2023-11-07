@@ -30,6 +30,9 @@
                 <div class="content">
                     <p>{{ produto.preco }}</p>
                 </div>
+                <span><a href="{{  url_for('produto.delete', id=produto.id)  }}">
+                    Deletar
+                </a></span>
                 <hr>
             </div>
         {% endfor %}
