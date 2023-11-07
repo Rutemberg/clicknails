@@ -10,4 +10,4 @@ class Produto(db.Model):
     codigobarra: Mapped[str] = mapped_column(String, nullable=False)
 
     def __repr__(self):
-        return f'<Post "{self.nome}">'
+        return f'<Produto "{self.nome}">'

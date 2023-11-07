@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <span class="title">
+    <h1>
+      {% block title %}
+        Fornecedores
+      {% endblock %}
+    </h1>
+  </span>
+
+  <div>
+    <form method="POST">
+      <label for="nome">nome Fornecedor</label><br />
+      <input type="text" id="nome" name="nome" /><br />
+      <label for="cnpj">cnpj</label><br />
+      <input type="text" id="cnpj" name="cnpj" /><br />
+      <label for="telefone">telefone:</label><br />
+      <input type="text" id="telefone" name="telefone" /><br />
+      <p>
+        <input type="submit" />
+      </p>
+    </form>
+  </div>
+  <div class="content">
+    {% for fornecedor in fornecedores %}
+      <div class="post">
+        <p>
+          <b>#{{ fornecedor.id }}</b>
+        </p>
+        <p class="title">
+          <b><a href="#">{{ fornecedor.nome }}</a></b>
+        </p>
+        <div class="content">
+          <p>{{ fornecedor.telefone }}</p>
+        </div>
+        <span><a href="{{ url_for('fornecedor.delete', id = fornecedor.id) }}">Deletar</a></span>
+        <hr />
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

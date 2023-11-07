@@ -17,6 +17,9 @@ def create_app(config_class=Config):
     from app.resources.produto import bp as produto_bp
     app.register_blueprint(produto_bp, url_prefix='/produto')
     
+    from app.resources.fornecedor import bp as fornecedor_bp
+    app.register_blueprint(fornecedor_bp, url_prefix='/fornecedor')
+    
     @app.route('/test/')
     def test_page():
         return '<h1>Testing the Flask Application Factory Pattern</h1>'
