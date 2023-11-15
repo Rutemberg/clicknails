@@ -1,42 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <span class="title">
-    <h1>
-      {% block title %}
-        Fornecedores
-      {% endblock %}
-    </h1>
-  </span>
-
-  <div>
-    <form method="POST">
-      <label for="nome">nome Fornecedor</label><br />
-      <input type="text" id="nome" name="nome" /><br />
-      <label for="cnpj">cnpj</label><br />
-      <input type="text" id="cnpj" name="cnpj" /><br />
-      <label for="telefone">telefone:</label><br />
-      <input type="text" id="telefone" name="telefone" /><br />
-      <p>
-        <input type="submit" />
-      </p>
-    </form>
-  </div>
-  <div class="content">
-    {% for fornecedor in fornecedores %}
-      <div class="post">
-        <p>
-          <b>#{{ fornecedor.id }}</b>
-        </p>
-        <p class="title">
-          <b><a href="#">{{ fornecedor.nome }}</a></b>
-        </p>
-        <div class="content">
-          <p>{{ fornecedor.telefone }}</p>
-        </div>
-        <span><a href="{{ url_for('fornecedor.delete', id = fornecedor.id) }}">Deletar</a></span>
-        <hr />
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="position-relative pb-3 text-center text-muted bg-body border border-dashed rounded-5 col-md-4">
+        <h1 class="text-body-emphasis mt-4 mb-4">Fornecedores</h1>
+        <form class="row gx-3 gy-2 align-items-center">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" />
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" step="0.1" placeholder="CNPJ" id="cnpj" name="cnpj" />
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" />
+          </div>
+          <div class="row justify-content-end">
+            <button type="submit" class="btn col-md-4 mt-5 base-color">Cadastrar fornecedor</button>
+          </div>
+        </form>
       </div>
-    {% endfor %}
+    </div>
+    
+    <div class="row justify-content-center b-example-divider">
+      <div class="col-md-3 mt-3">
+        <form class="d-flex">
+          <input class="form-control" type="search" placeholder="Fornecedor" aria-label="Search" />
+          <button class="btn btn-outline-dark" type="submit">Procurar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="row g-3 pt-3">
+      {% for fornecedor in fornecedores %}
+        <div class="col-sm-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ fornecedor.nome }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">#{{ fornecedor.id }}</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Telefone: {{ fornecedor.telefone }}</li>
+              <li class="list-group-item">CNPJ: {{ fornecedor.cnpj }}</li>
+            </ul>
+            <div class="card-body">
+              <a href="{{ url_for('fornecedor.delete', id = fornecedor.id) }}" class="card-link">Deletar</a>
+              <a href="#" class="card-link">Alterar</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}

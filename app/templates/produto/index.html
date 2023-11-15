@@ -3,45 +3,56 @@
 {% block content %}
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5 col-md-8">
-        <h1 class="text-body-emphasis mt-4 mb-3">Produtos</h1>
+      <div class="position-relative pb-3 text-center text-muted bg-body border border-dashed rounded-5 col-md-4">
+        <h1 class="text-body-emphasis mt-4 mb-4">Produtos</h1>
         <form class="row gx-3 gy-2 align-items-center">
-          <div class="col-md-4">
+          <div class="col-md-6">
             <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" />
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <input type="number" class="form-control" placeholder="Quantidade" id="quantidade" name="quantidade" />
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <input type="number" class="form-control" step="0.1" placeholder="Preco" id="preco" name="preco" />
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <input type="text" class="form-control" placeholder="Codigo de barra" id="codigobarra" name="codigobarra" />
           </div>
           <div class="row justify-content-end">
-            <button type="submit" class="btn btn-primary col-md-4 mt-5">Cadastrar</button>
+            <button type="submit" class="btn col-md-4 mt-5 base-color">Cadastrar produto</button>
           </div>
         </form>
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="content">
-        {% for produto in produtos %}
-          <div class="post">
-            <p>
-              <b>#{{ produto.id }}</b>
-            </p>
-            <p class="title">
-              <b><a href="#">{{ produto.nome }}</a></b>
-            </p>
-            <div class="content">
-              <p>{{ produto.preco }}</p>
-            </div>
-            <span><a href="{{ url_for('produto.delete', id = produto.id) }}">Deletar</a></span>
-            <hr />
-          </div>
-        {% endfor %}
+    
+    <div class="row justify-content-center b-example-divider">
+      <div class="col-md-3 mt-3">
+        <form class="d-flex">
+          <input class="form-control" type="search" placeholder="Produto" aria-label="Search" />
+          <button class="btn btn-outline-dark" type="submit">Procurar</button>
+        </form>
       </div>
+    </div>
+
+    <div class="row g-3 pt-3">
+      {% for produto in produtos %}
+        <div class="col-sm-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ produto.nome }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ produto.codigobarra }}</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Quantidade: {{ produto.quantidade }}</li>
+              <li class="list-group-item">Preco: {{ produto.preco }}</li>
+            </ul>
+            <div class="card-body">
+              <a href="{{ url_for('produto.delete', id = produto.id) }}" class="card-link">Deletar</a>
+              <a href="#" class="card-link">Alterar</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 {% endblock %}
