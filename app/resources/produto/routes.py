@@ -21,9 +21,20 @@ def index():
 
     return render_template("produto/index.html", produtos=produtos)
 
+
 @bp.route("/<int:id>")
 def delete(id):
     produto = Produto.query.get_or_404(id)
     db.session.delete(produto)
     db.session.commit()
     return redirect(url_for("produto.index"))
+
+
+@bp.route("/search", methods=["POST"])
+def search():
+    search = f"%{request.form['search']}%"
+    produtos = Produto.query.filter(
+        (Produto.nome.like(search)) | (Produto.codigobarra.like(search))
+    ).all()
+
+    return render_template("produto/index.html", produtos=produtos)
