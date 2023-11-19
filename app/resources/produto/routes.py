@@ -14,6 +14,8 @@ def index():
             preco=request.form["preco"],
             quantidade=request.form["quantidade"],
             codigobarra=request.form["codigobarra"],
+            marca=request.form["marca"],
+            cor=request.form["cor"],
         )
         db.session.add(novo_produto)
         db.session.commit()
@@ -34,7 +36,12 @@ def delete(id):
 def search():
     search = f"%{request.form['search']}%"
     produtos = Produto.query.filter(
-        (Produto.nome.like(search)) | (Produto.codigobarra.like(search))
+        (Produto.nome.like(search))
+        | (
+            Produto.codigobarra.like(search)
+            | (Produto.cor.like(search))
+            | (Produto.marca.like(search))
+        )
     ).all()
 
     return render_template("produto/index.html", produtos=produtos)

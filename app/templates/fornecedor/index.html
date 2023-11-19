@@ -7,13 +7,13 @@
         <h1 class="text-body-emphasis mt-4 mb-4">Fornecedores</h1>
         <form class="row gx-3 gy-2 align-items-center" method="post" action="{{ url_for('fornecedor.index') }}">
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" />
+            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" required/>
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" step="0.1" placeholder="CNPJ" id="cnpj" name="cnpj" />
+            <input type="text" class="form-control" step="0.1" placeholder="CNPJ" id="cnpj" name="cnpj" required/>
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" />
+            <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" required/>
           </div>
           <div class="row justify-content-end">
             <button type="submit" class="btn col-md-4 mt-5 base-color">Cadastrar fornecedor</button>

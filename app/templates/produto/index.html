@@ -6,17 +6,23 @@
       <div class="position-relative pb-3 text-center text-muted bg-body border border-dashed rounded-5 col-md-4">
         <h1 class="text-body-emphasis mt-4 mb-4">Produtos</h1>
         <form class="row gx-3 gy-2 align-items-center" method="post" action="{{ url_for('produto.index') }}">
-          <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" />
+          <div class="col-md-12">
+            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" required />
+          </div>
+          <div class="col-md-4">
+            <input type="number" class="form-control" step="1" placeholder="Quantidade" id="quantidade" name="quantidade" required />
+          </div>
+          <div class="col-md-4">
+            <input type="number" class="form-control" step=".01" placeholder="Preco" id="preco" name="preco" required />
           </div>
           <div class="col-md-6">
-            <input type="number" class="form-control" placeholder="Quantidade" id="quantidade" name="quantidade" />
+            <input type="text" class="form-control" placeholder="Marca" id="marca" name="marca" required />
           </div>
           <div class="col-md-6">
-            <input type="number" class="form-control" step="0.1" placeholder="Preco" id="preco" name="preco" />
+            <input type="text" class="form-control" placeholder="Cor" id="cor" name="cor" required />
           </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Codigo de barra" id="codigobarra" name="codigobarra" />
+          <div class="col-md-12">
+            <input type="text" class="form-control" placeholder="Codigo de barra" id="codigobarra" name="codigobarra" required />
           </div>
           <div class="row justify-content-end">
             <button type="submit" class="btn col-md-4 mt-5 base-color">Cadastrar produto</button>
@@ -29,29 +35,42 @@
       <div class="col-md-3 mt-3">
         <form class="d-flex" action="{{ url_for('produto.search') }}" method="post">
           <span class="input-group-text" id="basic-addon1" onclick="history.back()"><i class="bi bi-backspace"></i></span>
-          <input class="form-control" type="search" placeholder="Nome ou codigo de barra" aria-label="Search" name="search" id="search" />
+          <input class="form-control" type="search" placeholder="Nome, codigo de barra, marca, cor" aria-label="Search" name="search" id="search" />
           <button class="btn btn-outline-dark" type="submit">Procurar</button>
         </form>
       </div>
     </div>
 
-    <div class="row g-3 pt-3">
+    <div class="row g-3 pt-3 align-items-center justify-content-center">
       {% for produto in produtos %}
-        <div class="col-sm-2">
+        <div style="width: 20rem;">
           <div class="card">
+            <img src="{{ produto.img }}" class="mx-auto d-block" alt="..." />
             <div class="card-body">
-              <h5 class="card-title">{{ produto.nome }}</h5>
+              <h5 class="card-title text-truncate" style="text-overflow: ellipsis;">{{ produto.nome }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ produto.codigobarra }}</h6>
             </div>
             <ul class="list-group list-group-flush">
+              <li class="list-group-item">Marca: {{ produto.marca }}</li>
+              <li class="list-group-item">Cor: {{ produto.cor }}</li>
+
               {% if produto.quantidade > 10 and produto.quantidade < 20 %}
-                <li class="list-group-item bg-warning">Quantidade: {{ produto.quantidade }}</li>
+                
+                <li class="list-group-item">
+                  <h5><span class="badge bg-warning">Unidades: {{ produto.quantidade }}<i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i></span></h5>
+                </li>
               {% elif produto.quantidade < 10 %}
-                <li class="list-group-item bg-danger">Quantidade: {{ produto.quantidade }}</li>
+                <li class="list-group-item">
+                  <h5><span class="badge bg-danger">Unidades: {{ produto.quantidade }}<i class="bi bi-dash-circle-fill" style="margin-left: 5px;"></i></span></h5>
+                </li>
               {% else %}
-                <li class="list-group-item">Quantidade: {{ produto.quantidade }}</li>
+                <li class="list-group-item">
+                  <h5><span class="badge bg-success">Unidades: {{ produto.quantidade }}<i class="bi bi-check-square-fill" style="margin-left: 5px;"></i></span></h5>
+                </li>
               {% endif %}
-              <li class="list-group-item">Preco: {{ produto.preco }}</li>
+              <li class="list-group-item text-end">
+                <h2><span class="badge bg-secondary">R$ {{ produto.preco }}</span></h2>
+              </li>
             </ul>
             <div class="card-body">
               <a href="{{ url_for('produto.delete', id = produto.id) }}" class="card-link">Deletar</a>
@@ -62,4 +81,10 @@
       {% endfor %}
     </div>
   </div>
+  <script>
+    const toastLiveExample = document.getElementById('liveToast')
+    const toast = new bootstrap.Toast(toastLiveExample)
+    
+    toast.show()
+  </script>
 {% endblock %}
