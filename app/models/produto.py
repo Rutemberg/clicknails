@@ -35,7 +35,7 @@ class ProdutoImagem:
             )
             src = elem.get_attribute("src")
         except NoSuchElementException:
-            src = "https://cdn-icons-png.flaticon.com/512/2444/2444896.png"
+            src = "https://cdn-icons-png.flaticon.com/512/3163/3163203.png"
         return src
 
     def close(self):
