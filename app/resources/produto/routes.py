@@ -35,6 +35,20 @@ def delete(id):
     return redirect(url_for("produto.index"))
 
 
+@bp.route("/detalhes/<int:id>", methods=("GET", "POST"))
+def alterar_produto(id):
+    produto = Produto.query.get_or_404(id)
+    if request.method == "POST":
+        produto = Produto.query.get_or_404(id)
+        produto.nome = (request.form["nome"],)
+        produto.preco = (request.form["preco"],)
+        produto.quantidade = (request.form["quantidade"],)
+        produto.codigobarra = (request.form["codigobarra"],)
+        produto.marca = (request.form["marca"],)
+        produto.cor = request.form["cor"]
+        db.session.commit()
+    return render_template("produto/alterar.html", produto=produto)
+
 @bp.route("/search", methods=["POST"])
 def search():
     search = f"%{request.form['search']}%"

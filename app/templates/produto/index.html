@@ -74,7 +74,7 @@
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                      O item {{ produto.nome }} esta em fim de estoque <a href="#" class="text-dark">Ver detalhes!</a>
+                      O item {{ produto.nome }} esta em fim de estoque <a href="{{ url_for('produto.alterar_produto', id = produto.id) }}" class="text-dark">Ver detalhes!</a>
                     </div>
                   </div>
                 </div>
@@ -90,7 +90,7 @@
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                      O item {{ produto.nome }} esta com poucas unidades <a href="#" class="text-dark">Ver detalhes!</a>
+                      O item {{ produto.nome }} esta com poucas unidades <a href="{{ url_for('produto.alterar_produto', id = produto.id) }}" class="text-dark">Ver detalhes!</a>
                     </div>
                   </div>
                 </div>
@@ -108,7 +108,7 @@
             </ul>
             <div class="card-body text-end">
               <a href="{{ url_for('produto.delete', id = produto.id) }}" class="card-link btn btn-secondary" type="button">Deletar</a>
-              <a href="#" class="card-link btn btn-outline-secondary" type="button">Alterar</a>
+              <a href="{{ url_for('produto.alterar_produto', id = produto.id) }}" class="card-link btn btn-outline-secondary" type="button">Detalhes</a>
             </div>
           </div>
         </div>

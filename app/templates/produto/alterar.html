@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container-fluid mb-5">
+    <div class="row justify-content-center align-items-center vh-100">
+      <div class="position-relative pb-3 text-center text-muted bg-body col-md-4">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ produto.img }}" class="img-fluid rounded-start" alt="..." />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h1 class="card-title mb-3">Produto #{{ produto.id }}</h1>
+
+                <form class="align-items-center form-floating" method="post" action="{{ url_for('produto.alterar_produto', id = produto.id) }}">
+                  <div class="row g-2">
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ produto.nome }}" />
+                        <label for="nome">Nome</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="number" class="form-control" step="1" placeholder="Quantidade" id="quantidade" name="quantidade" required value="{{ produto.quantidade }}" />
+                        <label for="quantidade">Quantidade</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="number" class="form-control" step=".01" placeholder="Preco" id="preco" name="preco" required value="{{ produto.preco }}" />
+                        <label for="preco">Valor</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Marca" id="Marca" name="marca" required value="{{ produto.marca }}" />
+                        <label for="Marca">Marca</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="Cor" id="cor" name="cor" value="{{ produto.cor }}" />
+                        <label for="cor">Cor</label>
+                      </div>
+                    </div>
+                    <div class="form-floating">
+                      <input type="text" class="form-control" placeholder="Codigo de barra" id="codigobarra" name="codigobarra" required value="{{ produto.codigobarra }}" />
+                      <label for="codigobarra">Codigo de barra</label>
+                    </div>
+                    <div class="row justify-content-end">
+                      <button type="submit" class="btn col-md-4 mt-5 base-color">Alterar produto</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

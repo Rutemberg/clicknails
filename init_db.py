@@ -36,7 +36,7 @@ for i in range(0, 10):
     random_num = random.randrange(1, 1000)
     cnpj = random.randrange(10000000000, 99999999999)
     telefone = fake.phone_number()
-    fornecedor = Fornecedor(nome=f"{fake.name()}", cnpj=cnpj, telefone=telefone)
+    fornecedor = Fornecedor(nome=f"{fake.company()}", cnpj=cnpj, telefone=telefone)
     db.session.add(fornecedor)
     print(fornecedor)
     print("--")
