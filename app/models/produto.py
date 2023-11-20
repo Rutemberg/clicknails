@@ -15,15 +15,10 @@ from selenium.webdriver.support import expected_conditions as EC
 class ProdutoImagem:
     def __init__(self):
         self.options = webdriver.ChromeOptions()
-        # self.options.add_argument("--headless")
-        self.options.add_argument("--disable-gpu")
+        self.options.add_argument("--headless")
         self.options.add_argument("--no-sandbox")
         self.options.add_argument("enable-automation")
-        # self.options.add_argument("--disable-infobars")
-        # self.options.add_argument("--disable-dev-shm-usage")
-        # self.options.add_argument("start-maximized")
-        # self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        # self.options.add_experimental_option("useAutomationExtension", False)
+        self.options.add_argument("--disable-dev-shm-usage")
         self.driver = webdriver.Chrome(self.options)
         
     def get_imagem(self, nome):
@@ -55,7 +50,7 @@ class Produto(db.Model):
     codigobarra: Mapped[str] = mapped_column(String, nullable=False)
     img: Mapped[str] = mapped_column(String, nullable=False)
     marca: Mapped[str] = mapped_column(String, nullable=False)
-    cor: Mapped[str] = mapped_column(String, nullable=False)
+    cor: Mapped[str] = mapped_column(String, nullable=True)
 
     def __repr__(self):
         return f'<Produto "{self.nome}">'

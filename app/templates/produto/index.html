@@ -20,7 +20,7 @@
             <input type="text" class="form-control" placeholder="Marca" id="marca" name="marca" required />
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Cor" id="cor" name="cor" required />
+            <input type="text" class="form-control" placeholder="Cor" id="cor" name="cor" />
           </div>
           <div class="col-md-12">
             <input type="text" class="form-control" placeholder="Codigo de barra" id="codigobarra" name="codigobarra" required />
@@ -46,14 +46,25 @@
       {% for produto in produtos %}
         <div style="width: 20rem;">
           <div class="card overflow-hidden">
-            <img src="{{ produto.img }}" class="mx-auto d-block" alt="..."  height="180rem"/>
+            <img src="{{ produto.img }}" class="mx-auto d-block" alt="..." height="180rem" />
             <div class="card-body">
               <h5 class="card-title text-truncate" style="text-overflow: ellipsis;">{{ produto.nome }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ produto.codigobarra }}</h6>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item text-muted">Marca: {{ produto.marca }}</li>
-              <li class="list-group-item text-muted">Cor: {{ produto.cor }}</li>
+              <form class="row justify-content-center">
+                <div class="col-md-6">
+                  <span class="input-group-text" id="basic-addon1">Marca</span>
+                  <input class="form-control" type="text" value="{{ produto.marca }}" name="marca" id="marca" readonly />
+                </div>
+
+                {% if produto.cor %}
+                  <div class="col-md-6">
+                    <span class="input-group-text" id="basic-addon1">Cor</span>
+                    <input class="form-control" type="text" value="{{ produto.cor }}" name="cor" id="cor" readonly />
+                  </div>
+                {% endif %}
+              </form>
               {% if produto.quantidade < 10 %}
                 <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
                   <div class="toast fade show">
@@ -63,14 +74,14 @@
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                      O item {{ produto.nome }} esta em fim de estoque <a href="#" class="text-dark">Clique aqui para verificar!</a>
+                      O item {{ produto.nome }} esta em fim de estoque <a href="#" class="text-dark">Ver detalhes!</a>
                     </div>
                   </div>
                 </div>
                 <li class="list-group-item">
-                  <h5><span class="badge bg-danger">Unidades: {{ produto.quantidade }}<i class="bi bi-dash-circle-fill" style="margin-left: 5px;"></i></span></h5>
+                  <h5><span class="badge bg-danger">{{ produto.quantidade }} unidades <i class="bi bi-dash-circle-fill" style="margin-left: 5px;"></i></span></h5>
                 </li>
-              {% elif produto.quantidade > 10 and produto.quantidade < 20 %}
+              {% elif produto.quantidade >= 10 and produto.quantidade < 20 %}
                 <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
                   <div class="toast fade show">
                     <div class="toast-header bg-warning text-white">
@@ -79,25 +90,25 @@
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                     <div class="toast-body">
-                      O item {{ produto.nome }} esta com alerta de poucas unidades <a href="#" class="text-dark">Clique aqui para verificar!</a>
+                      O item {{ produto.nome }} esta com poucas unidades <a href="#" class="text-dark">Ver detalhes!</a>
                     </div>
                   </div>
                 </div>
                 <li class="list-group-item">
-                  <h5><span class="badge bg-warning">Unidades: {{ produto.quantidade }}<i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i></span></h5>
+                  <h5><span class="badge bg-warning">{{ produto.quantidade }} unidades<i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i></span></h5>
                 </li>
               {% else %}
                 <li class="list-group-item">
-                  <h5><span class="badge bg-success">Unidades: {{ produto.quantidade }}<i class="bi bi-check-square-fill" style="margin-left: 5px;"></i></span></h5>
+                  <h5><span class="badge bg-success">{{ produto.quantidade }} unidades<i class="bi bi-check-square-fill" style="margin-left: 5px;"></i></span></h5>
                 </li>
               {% endif %}
               <li class="list-group-item text-end">
                 <h2><span class="badge text-dark">R$ {{ produto.preco }}</span></h2>
               </li>
             </ul>
-            <div class="card-body">
-              <a href="{{ url_for('produto.delete', id = produto.id) }}" class="card-link">Deletar</a>
-              <a href="#" class="card-link">Alterar</a>
+            <div class="card-body text-end">
+              <a href="{{ url_for('produto.delete', id = produto.id) }}" class="card-link btn btn-secondary" type="button">Deletar</a>
+              <a href="#" class="card-link btn btn-outline-secondary" type="button">Alterar</a>
             </div>
           </div>
         </div>
