@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container-fluid">
+  <div class="container-fluid mb-5">
     <div class="row justify-content-center">
       <div class="position-relative pb-3 text-center text-muted bg-body border border-dashed rounded-5 col-md-4">
         <h1 class="text-body-emphasis mt-4 mb-4">Produtos</h1>
+
         <form class="row gx-3 gy-2 align-items-center" method="post" action="{{ url_for('produto.index') }}">
           <div class="col-md-12">
             <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" required />
@@ -51,11 +52,22 @@
               <h6 class="card-subtitle mb-2 text-muted">{{ produto.codigobarra }}</h6>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Marca: {{ produto.marca }}</li>
-              <li class="list-group-item">Cor: {{ produto.cor }}</li>
+              <li class="list-group-item text-muted">Marca: {{ produto.marca }}</li>
+              <li class="list-group-item text-muted">Cor: {{ produto.cor }}</li>
 
               {% if produto.quantidade > 10 and produto.quantidade < 20 %}
-                
+                <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
+                  <div class="toast fade show">
+                    <div class="toast-header bg-warning text-white">
+                      <strong class="me-auto"><i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i> Alerta de estoque</strong>
+                      <small>agora</small>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                      O item {{ produto.nome }} esta com alerta de poucas unidades <a href="#" class="text-dark">Clique aqui para verificar!</a>
+                    </div>
+                  </div>
+                </div>
                 <li class="list-group-item">
                   <h5><span class="badge bg-warning">Unidades: {{ produto.quantidade }}<i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i></span></h5>
                 </li>
@@ -69,7 +81,7 @@
                 </li>
               {% endif %}
               <li class="list-group-item text-end">
-                <h2><span class="badge bg-secondary">R$ {{ produto.preco }}</span></h2>
+                <h2><span class="badge text-dark">R$ {{ produto.preco }}</span></h2>
               </li>
             </ul>
             <div class="card-body">
@@ -81,10 +93,4 @@
       {% endfor %}
     </div>
   </div>
-  <script>
-    const toastLiveExample = document.getElementById('liveToast')
-    const toast = new bootstrap.Toast(toastLiveExample)
-    
-    toast.show()
-  </script>
 {% endblock %}
