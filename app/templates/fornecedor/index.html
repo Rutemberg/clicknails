@@ -7,13 +7,13 @@
         <h1 class="text-body-emphasis mt-4 mb-4">Fornecedores</h1>
         <form class="row gx-3 gy-2 align-items-center" method="post" action="{{ url_for('fornecedor.index') }}">
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" required/>
+            <input type="text" class="form-control" placeholder="Nome" id="nome" name="nome" required />
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" step="0.1" placeholder="CNPJ" id="cnpj" name="cnpj" required/>
+            <input type="text" class="form-control" step="0.1" placeholder="CNPJ" id="cnpj" name="cnpj" required />
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" required/>
+            <input type="text" class="form-control" placeholder="Telefone" id="telefone" name="telefone" required />
           </div>
           <div class="row justify-content-end">
             <button type="submit" class="btn col-md-4 mt-5 base-color">Cadastrar fornecedor</button>
@@ -32,21 +32,26 @@
       </div>
     </div>
 
-    <div class="row g-3 pt-3">
+    <div class="row g-3 pt-3 align-items-center justify-content-center">
       {% for fornecedor in fornecedores %}
-        <div class="col-sm-2">
-          <div class="card">
+        <div style="width: 20rem;">
+          <div class="card overflow-hidden">
+            <img src="{{ url_for('static', filename = 'fornecedor.png') }}" class="mx-auto d-block" alt="..." height="180rem" />
             <div class="card-body">
-              <h5 class="card-title">{{ fornecedor.nome }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">#{{ fornecedor.id }}</h6>
+              <h5 class="card-title text-truncate" style="text-overflow: ellipsis;">{{ fornecedor.nome }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ fornecedor.cnpj }}</h6>
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Telefone: {{ fornecedor.telefone }}</li>
-              <li class="list-group-item">CNPJ: {{ fornecedor.cnpj }}</li>
+              <form class="row justify-content-center">
+                <div class="col-md-12">
+                  <span class="input-group-text" id="basic-addon1">Telefone</span>
+                  <input class="form-control" type="text" value="{{ fornecedor.telefone }}" name="telefone" id="telefone" readonly />
+                </div>
+              </form>
             </ul>
-            <div class="card-body">
-              <a href="{{ url_for('fornecedor.delete', id = fornecedor.id) }}" class="card-link">Deletar</a>
-              <a href="#" class="card-link">Alterar</a>
+            <div class="card-body text-end">
+              <a href="{{ url_for('fornecedor.delete', id = fornecedor.id) }}" class="card-link btn btn-secondary" type="button">Deletar</a>
+              <a href="{{ url_for('fornecedor.alterar_fornecedor', id = fornecedor.id) }}" class="card-link btn btn-outline-secondary" type="button">Detalhes</a>
             </div>
           </div>
         </div>

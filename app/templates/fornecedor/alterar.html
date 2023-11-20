@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container-fluid mb-5">
+    <div class="row justify-content-center align-items-center vh-100">
+      <div class="position-relative pb-3 text-center text-muted bg-body col-md-4">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ url_for('static', filename = 'fornecedor.png') }}" class="img-fluid rounded-start" alt="..." />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h1 class="card-title mb-3">Fornecedor #{{ fornecedor.id }}</h1>
+
+                <form class="align-items-center form-floating" method="post" action="{{ url_for('fornecedor.alterar_fornecedor', id = fornecedor.id) }}">
+                  <div class="row g-2">
+                    <div class="col-md-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ fornecedor.nome }}" />
+                        <label for="nome">Nome</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="number" class="form-control" step="1" id="cnpj" name="cnpj" required value="{{ fornecedor.cnpj }}" />
+                        <label for="quantidade">CNPJ</label>
+                      </div>
+                    </div>
+
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="telefone" name="telefone" required value="{{ fornecedor.telefone }}" />
+                      <label for="codigobarra">Telefone</label>
+                    </div>
+                    <div class="row justify-content-end">
+                      <button type="submit" class="btn col-md-4 mt-5 base-color">Alterar fornecedor</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

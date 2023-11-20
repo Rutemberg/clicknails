@@ -49,6 +49,7 @@ def alterar_produto(id):
         db.session.commit()
     return render_template("produto/alterar.html", produto=produto)
 
+
 @bp.route("/search", methods=["POST"])
 def search():
     search = f"%{request.form['search']}%"

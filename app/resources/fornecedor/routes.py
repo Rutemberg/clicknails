@@ -39,3 +39,15 @@ def search():
     ).all()
 
     return render_template("fornecedor/index.html", fornecedores=fornecedores)
+
+
+@bp.route("/detalhes/<int:id>", methods=("GET", "POST"))
+def alterar_fornecedor(id):
+    fornecedor = Fornecedor.query.get_or_404(id)
+    if request.method == "POST":
+        fornecedor = fornecedor.query.get_or_404(id)
+        fornecedor.nome = (request.form["nome"],)
+        fornecedor.cnpj = (request.form["cnpj"],)
+        fornecedor.telefone = (request.form["telefone"],)
+        db.session.commit()
+    return render_template("fornecedor/alterar.html", fornecedor=fornecedor)
