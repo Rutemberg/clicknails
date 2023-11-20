@@ -1,14 +1,16 @@
 from flask import render_template, request, url_for, redirect
 from app.resources.produto import bp
 from app.extensions import db
-from app.models.produto import Produto
+from app.models.produto import Produto, ProdutoImagem
 
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
     produtos = Produto.query.all()
-
     if request.method == "POST":
+        img = ProdutoImagem()
+        nome = request.form["nome"]
+        src = img.get_imagem(nome)
         novo_produto = Produto(
             nome=request.form["nome"],
             preco=request.form["preco"],
@@ -16,6 +18,7 @@ def index():
             codigobarra=request.form["codigobarra"],
             marca=request.form["marca"],
             cor=request.form["cor"],
+            img=src,
         )
         db.session.add(novo_produto)
         db.session.commit()

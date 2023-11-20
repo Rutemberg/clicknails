@@ -45,8 +45,8 @@
     <div class="row g-3 pt-3 align-items-center justify-content-center">
       {% for produto in produtos %}
         <div style="width: 20rem;">
-          <div class="card">
-            <img src="{{ produto.img }}" class="mx-auto d-block" alt="..." />
+          <div class="card overflow-hidden">
+            <img src="{{ produto.img }}" class="mx-auto d-block" alt="..."  height="180rem"/>
             <div class="card-body">
               <h5 class="card-title text-truncate" style="text-overflow: ellipsis;">{{ produto.nome }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ produto.codigobarra }}</h6>
@@ -54,12 +54,27 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item text-muted">Marca: {{ produto.marca }}</li>
               <li class="list-group-item text-muted">Cor: {{ produto.cor }}</li>
-
-              {% if produto.quantidade > 10 and produto.quantidade < 20 %}
+              {% if produto.quantidade < 10 %}
+                <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
+                  <div class="toast fade show">
+                    <div class="toast-header bg-danger text-white">
+                      <strong class="me-auto"><i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i> Alerta de fim de estoque</strong>
+                      <small>agora</small>
+                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    </div>
+                    <div class="toast-body">
+                      O item {{ produto.nome }} esta em fim de estoque <a href="#" class="text-dark">Clique aqui para verificar!</a>
+                    </div>
+                  </div>
+                </div>
+                <li class="list-group-item">
+                  <h5><span class="badge bg-danger">Unidades: {{ produto.quantidade }}<i class="bi bi-dash-circle-fill" style="margin-left: 5px;"></i></span></h5>
+                </li>
+              {% elif produto.quantidade > 10 and produto.quantidade < 20 %}
                 <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
                   <div class="toast fade show">
                     <div class="toast-header bg-warning text-white">
-                      <strong class="me-auto"><i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i> Alerta de estoque</strong>
+                      <strong class="me-auto"><i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i> Alerta de estoque acabando</strong>
                       <small>agora</small>
                       <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
@@ -70,10 +85,6 @@
                 </div>
                 <li class="list-group-item">
                   <h5><span class="badge bg-warning">Unidades: {{ produto.quantidade }}<i class="bi bi-exclamation-triangle-fill" style="margin-left: 5px;"></i></span></h5>
-                </li>
-              {% elif produto.quantidade < 10 %}
-                <li class="list-group-item">
-                  <h5><span class="badge bg-danger">Unidades: {{ produto.quantidade }}<i class="bi bi-dash-circle-fill" style="margin-left: 5px;"></i></span></h5>
                 </li>
               {% else %}
                 <li class="list-group-item">

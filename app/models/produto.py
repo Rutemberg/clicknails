@@ -1,3 +1,4 @@
+import time
 from app.extensions import db
 from sqlalchemy import Integer, String, Float
 from sqlalchemy.orm import Mapped, mapped_column
@@ -7,35 +8,43 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class ProdutoImagem:
     def __init__(self):
         self.options = webdriver.ChromeOptions()
+        # self.options.add_argument("--headless")
+        self.options.add_argument("--disable-gpu")
+        self.options.add_argument("--no-sandbox")
+        self.options.add_argument("enable-automation")
+        # self.options.add_argument("--disable-infobars")
+        # self.options.add_argument("--disable-dev-shm-usage")
+        # self.options.add_argument("start-maximized")
+        # self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        # self.options.add_experimental_option("useAutomationExtension", False)
         self.driver = webdriver.Chrome(self.options)
-
-    def get_img(self, nome):
-        self.driver.get("https://www.google.com.br/?hl=pt-BR")
+        
+    def get_imagem(self, nome):
+        self.driver.get("https://images.google.com.br")
         elem = self.driver.find_element(By.ID, "APjFqb")
         elem.click()
         elem.send_keys(nome)
         elem.send_keys(Keys.ENTER)
         try:
+            nome_elem = ".isv-r:nth-child(2) .rg_i"
             elem = self.driver.find_element(
-                By.XPATH,
-                "//g-inner-card/div/div/img",
+                By.CSS_SELECTOR,
+                nome_elem,
             )
             src = elem.get_attribute("src")
-
         except NoSuchElementException:
-            elem = self.driver.find_element(
-                By.XPATH,
-                "/html/body/div[6]/div/div[10]/div/div[2]/div[2]/div/div/div[1]/div/div/div[2]/g-section-with-header/div[2]/div[2]/div/div/div[1]/div/div[1]/div[1]/div/img",
-            )
-            src = elem.get_attribute("src")
-        else:
             src = "https://cdn-icons-png.flaticon.com/512/2444/2444896.png"
         return src
+
+    def close(self):
+        return self.driver.close()
 
 
 class Produto(db.Model):

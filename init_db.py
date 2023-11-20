@@ -4,13 +4,10 @@ from app.models.fornecedor import Fornecedor
 import random
 from faker import Faker
 from app.constants import COR, MARCAS
-
 db.drop_all()
 db.create_all()
 fake = Faker()
-
-img = ProdutoImagem()
-
+web_produto = ProdutoImagem()
 for i in range(0, 10):
     random_num = random.randrange(1, 1000)
     codigobarra = random.randrange(100000000000000000000, 999999999999999999999)
@@ -19,7 +16,7 @@ for i in range(0, 10):
     marca = random.choice(MARCAS)
     cor = random.choice(COR)
     nome = f"Esmalte {marca} {cor}"
-    src = img.get_img(nome)
+    src = web_produto.get_imagem(nome)
     produto = Produto(
         nome=nome,
         quantidade=quantidade,
@@ -33,6 +30,8 @@ for i in range(0, 10):
     print(produto)
     print("--")
     db.session.commit()
+web_produto.close()
+
 for i in range(0, 10):
     random_num = random.randrange(1, 1000)
     cnpj = random.randrange(10000000000, 99999999999)
