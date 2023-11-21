@@ -46,28 +46,28 @@ class ProdutoAnalytics:
         elem.click()
         elem.send_keys(nome)
         elem.send_keys(Keys.ENTER)
-        try:
-            elem = self.driver.find_element(
-                By.CLASS_NAME, "sh-pr__product-results-grid"
-            )
-            cards = elem.find_elements(By.CLASS_NAME, "sh-dgr__grid-result")
-            for card in cards:
-                valor = card.find_element(By.CLASS_NAME, "OFFNJ")
-                vendedor = card.find_element(By.CLASS_NAME, "IuHnof")
-                link = card.find_element(By.CLASS_NAME, "sh-dgr__offer-content").find_element(By.TAG_NAME, "a")
-                nome = card.find_element(By.CLASS_NAME, "translate-content").find_element(By.TAG_NAME, "h3")
+        elem = self.driver.find_element(
+            By.CLASS_NAME, "sh-pr__product-results-grid"
+        )
+        cards = elem.find_elements(By.CLASS_NAME, "sh-dgr__grid-result")
+        for card in cards:
+            valor = card.find_element(By.CLASS_NAME, "OFFNJ")
+            vendedor = card.find_element(By.CLASS_NAME, "IuHnof")
+            link = card.find_element(By.CLASS_NAME, "sh-dgr__offer-content").find_element(By.TAG_NAME, "a")
+            img = card.find_element(By.CLASS_NAME, "sh-dgr__content").find_element(By.TAG_NAME, "img")
+            nome = card.find_element(By.CLASS_NAME, "translate-content").find_element(By.TAG_NAME, "h3")
 
-                lista.append(
-                    {
-                        "vendedor": vendedor.text,
-                        "valor_": int(re.findall("\\d+", valor.text)[0]),
-                        "valor": valor.text,
-                        "link": link.get_property("href"),
-                        "nome": nome.text,
-                    }
-                )
-        except:
-            return lista
+            lista.append(
+                {
+                    "vendedor": vendedor.text,
+                    "valor_": int(re.findall("\\d+", valor.text)[0]),
+                    "valor": valor.text,
+                    "link": link.get_property("href"),
+                    "img": img.get_property("src"),
+                    "nome": nome.text,
+                }
+            )
+
         return lista
 
     def close(self):

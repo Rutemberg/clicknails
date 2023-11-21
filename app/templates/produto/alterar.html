@@ -65,12 +65,16 @@
             {% for analytic in analytics %}
               <a href="{{ analytic.link }}" class="list-group-item list-group-item-action" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">{{ analytic.vendedor }}</h5>
-                  <small>agora</small>
-                </div>
-                <small>{{ analytic.nome }}</small>
-                <div class="text-end">
-                  <h5><span class="text-dark">{{ analytic.valor }}</span></h5>
+                  <div class="col-md-2">
+                    <img src="{{ analytic.img }}" class="rounded-start" alt="..." height="50rem"/>
+                  </div>
+                  <div class="col-md-10">
+                    <h5 class="mb-1">{{ analytic.vendedor }}</h5>
+                    <small>{{ analytic.nome }}</small>
+                    <div class="text-end">
+                      <h5><span class="text-dark">{{ analytic.valor }}</span></h5>
+                    </div>
+                  </div>
                 </div>
               </a>
             {% endfor %}
