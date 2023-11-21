@@ -49,6 +49,7 @@ def alterar_produto(id):
         produto.quantidade = (request.form["quantidade"],)
         produto.codigobarra = (request.form["codigobarra"],)
         produto.marca = (request.form["marca"],)
+        produto.cor = (request.form["cor"],)
         produto.img = analytics.get_imagem(
             f"{produto.nome} {produto.cor}" if produto.cor else produto.nome
         )
