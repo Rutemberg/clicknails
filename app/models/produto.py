@@ -41,7 +41,6 @@ class ProdutoAnalytics:
 
     def pesquisa_precos(self, nome):
         lista = []
-        trim = re.compile(r"[^\d.,]+")
         self.driver.get("https://shopping.google.com.br/")
         elem = self.driver.find_element(By.ID, "REsRA")
         elem.click()
@@ -61,12 +60,13 @@ class ProdutoAnalytics:
                 lista.append(
                     {
                         "vendedor": vendedor.text,
-                        "valor": float(trim.sub("", (valor.text)).replace(",", ".")),
+                        "valor_": int(re.findall("\\d+", valor.text)[0]),
+                        "valor": valor.text,
                         "link": link.get_property("href"),
                         "nome": nome.text,
                     }
                 )
-        except NoSuchElementException:
+        except:
             return lista
         return lista
 

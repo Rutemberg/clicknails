@@ -59,20 +59,33 @@
           </div>
         </div>
       </div>
-      <div class="position-relative pb-3 text-muted bg-body col-md-3 overflow-auto" style="max-height: 600px">
+      <div class="position-relative pb-3 text-muted bg-body col-md-4 overflow-auto" style="max-height: 600px">
         <div class="list-group">
-          {% for analytic in analytics %}
-            <a href="{{ analytic.link }}" class="list-group-item list-group-item-action" aria-current="true">
+          {% if analytics %}
+            {% for analytic in analytics %}
+              <a href="{{ analytic.link }}" class="list-group-item list-group-item-action" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ analytic.vendedor }}</h5>
+                  <small>agora</small>
+                </div>
+                <small>{{ analytic.nome }}</small>
+                <div class="text-end">
+                  <h5><span class="text-dark">{{ analytic.valor }}</span></h5>
+                </div>
+              </a>
+            {% endfor %}
+          {% else %}
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{ analytic.vendedor }}</h5>
+                <h5 class="mb-1">A pesquisa de preços está em andamento</h5>
                 <small>agora</small>
               </div>
-              <small>{{analytic.nome}}</small>
+              <small>Volte em breve.</small>
               <div class="text-end">
-                <h5><span class="text-dark">R$ {{ analytic.valor }}</span></h5>
+                <h5><span class="text-dark"></span></h5>
               </div>
             </a>
-          {% endfor %}
+          {% endif %}
         </div>
       </div>
     </div>

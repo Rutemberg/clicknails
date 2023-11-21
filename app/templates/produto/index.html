@@ -65,7 +65,7 @@
                   </div>
                 {% endif %}
               </form>
-              {% if produto.quantidade < 10 %}
+              {% if produto.quantidade >= 10 and produto.quantidade < 20 %}
                 <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
                   <div class="toast fade show">
                     <div class="toast-header bg-danger text-white">
@@ -81,7 +81,7 @@
                 <li class="list-group-item">
                   <h5><span class="badge bg-danger">{{ produto.quantidade }} unidades <i class="bi bi-dash-circle-fill" style="margin-left: 5px;"></i></span></h5>
                 </li>
-              {% elif produto.quantidade >= 10 and produto.quantidade < 20 %}
+              {% elif produto.quantidade < 10 %}
                 <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-3">
                   <div class="toast fade show">
                     <div class="toast-header bg-warning text-white">

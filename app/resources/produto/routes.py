@@ -43,7 +43,7 @@ def alterar_produto(id):
     analytics = analytics.pesquisa_precos(produto.nome)
 
     if analytics:
-        analytics_desc = sorted(analytics, key=lambda x: x['valor'])
+        analytics = sorted(analytics, key=lambda x: x['valor_'])
     
     if request.method == "POST":
         produto = Produto.query.get_or_404(id)
@@ -55,7 +55,7 @@ def alterar_produto(id):
         produto.cor = request.form["cor"]
         db.session.commit()
 
-    return render_template("produto/alterar.html", produto=produto, analytics=analytics_desc)
+    return render_template("produto/alterar.html", produto=produto, analytics=analytics)
 
 
 @bp.route("/search", methods=["POST"])
