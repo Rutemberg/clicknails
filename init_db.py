@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.models.produto import Produto, ProdutoImagem
+from app.models.produto import Produto, ProdutoAnalytics
 from app.models.fornecedor import Fornecedor
 import random
 from faker import Faker
@@ -7,7 +7,7 @@ from app.constants import COR, MARCAS
 db.drop_all()
 db.create_all()
 fake = Faker()
-web_produto = ProdutoImagem()
+web_produto = ProdutoAnalytics()
 for i in range(0, 10):
     random_num = random.randrange(1, 1000)
     codigobarra = random.randrange(100000000000000000000, 999999999999999999999)

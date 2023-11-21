@@ -1,14 +1,15 @@
+import operator
 from flask import render_template, request, url_for, redirect
 from app.resources.produto import bp
 from app.extensions import db
-from app.models.produto import Produto, ProdutoImagem
+from app.models.produto import Produto, ProdutoAnalytics
 
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
     produtos = Produto.query.all()
     if request.method == "POST":
-        img = ProdutoImagem()
+        img = ProdutoAnalytics()
         nome = request.form["nome"]
         src = img.get_imagem(nome)
         novo_produto = Produto(
@@ -38,6 +39,12 @@ def delete(id):
 @bp.route("/detalhes/<int:id>", methods=("GET", "POST"))
 def alterar_produto(id):
     produto = Produto.query.get_or_404(id)
+    analytics = ProdutoAnalytics()
+    analytics = analytics.pesquisa_precos(produto.nome)
+
+    if analytics:
+        analytics_desc = sorted(analytics, key=lambda x: x['valor'])
+    
     if request.method == "POST":
         produto = Produto.query.get_or_404(id)
         produto.nome = (request.form["nome"],)
@@ -47,7 +54,8 @@ def alterar_produto(id):
         produto.marca = (request.form["marca"],)
         produto.cor = request.form["cor"]
         db.session.commit()
-    return render_template("produto/alterar.html", produto=produto)
+
+    return render_template("produto/alterar.html", produto=produto, analytics=analytics_desc)
 
 
 @bp.route("/search", methods=["POST"])

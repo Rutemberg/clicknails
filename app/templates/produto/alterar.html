@@ -3,7 +3,7 @@
 {% block content %}
   <div class="container-fluid mb-5">
     <div class="row justify-content-center align-items-center vh-100">
-      <div class="position-relative pb-3 text-center text-muted bg-body col-md-4">
+      <div class="position-relative pb-3 text-center text-muted bg-body col-md-6">
         <div class="card mb-3">
           <div class="row g-0">
             <div class="col-md-4">
@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h1 class="card-title mb-3">Produto #{{ produto.id }}</h1>
+                <h1 class="card-title mb-3">{{ produto.nome }}</h1>
 
                 <form class="align-items-center form-floating" method="post" action="{{ url_for('produto.alterar_produto', id = produto.id) }}">
                   <div class="row g-2">
@@ -57,6 +57,22 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="position-relative pb-3 text-muted bg-body col-md-3 overflow-auto" style="max-height: 600px">
+        <div class="list-group">
+          {% for analytic in analytics %}
+            <a href="{{ analytic.link }}" class="list-group-item list-group-item-action" aria-current="true">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ analytic.vendedor }}</h5>
+                <small>agora</small>
+              </div>
+              <small>{{analytic.nome}}</small>
+              <div class="text-end">
+                <h5><span class="text-dark">R$ {{ analytic.valor }}</span></h5>
+              </div>
+            </a>
+          {% endfor %}
         </div>
       </div>
     </div>
