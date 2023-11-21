@@ -54,8 +54,8 @@ class ProdutoAnalytics:
             for card in cards:
                 valor = card.find_element(By.CLASS_NAME, "OFFNJ")
                 vendedor = card.find_element(By.CLASS_NAME, "IuHnof")
-                link = card.find_element(By.CLASS_NAME, "translate-content")
-                nome = link.find_element(By.TAG_NAME, "h3")
+                link = card.find_element(By.CLASS_NAME, "sh-dgr__offer-content").find_element(By.TAG_NAME, "a")
+                nome = card.find_element(By.CLASS_NAME, "translate-content").find_element(By.TAG_NAME, "h3")
 
                 lista.append(
                     {
