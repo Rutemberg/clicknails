@@ -9,16 +9,17 @@ from app.models.produto import Produto, ProdutoAnalytics
 def index():
     produtos = Produto.query.all()
     if request.method == "POST":
-        img = ProdutoAnalytics()
+        analytics = ProdutoAnalytics()
+        cor = request.form["cor"]
         nome = request.form["nome"]
-        src = img.get_imagem(nome)
+        src = analytics.get_imagem(f"{nome} {cor}" if cor else nome)
         novo_produto = Produto(
             nome=request.form["nome"],
             preco=request.form["preco"],
             quantidade=request.form["quantidade"],
             codigobarra=request.form["codigobarra"],
             marca=request.form["marca"],
-            cor=request.form["cor"],
+            cor=cor,
             img=src,
         )
         db.session.add(novo_produto)
@@ -48,10 +49,14 @@ def alterar_produto(id):
         produto.quantidade = (request.form["quantidade"],)
         produto.codigobarra = (request.form["codigobarra"],)
         produto.marca = (request.form["marca"],)
-        produto.cor = request.form["cor"]
+        produto.img = analytics.get_imagem(
+            f"{produto.nome} {produto.cor}" if produto.cor else produto.nome
+        )
         db.session.commit()
 
-    analytics = analytics.pesquisa_precos(produto.nome)
+    analytics = analytics.pesquisa_precos(
+        f"{produto.nome} {produto.cor}" if produto.cor else produto.nome
+    )
 
     if analytics:
         analytics = sorted(analytics, key=lambda x: x["valor_"])
