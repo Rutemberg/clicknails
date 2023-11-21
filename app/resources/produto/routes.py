@@ -40,10 +40,6 @@ def delete(id):
 def alterar_produto(id):
     produto = Produto.query.get_or_404(id)
     analytics = ProdutoAnalytics()
-    analytics = analytics.pesquisa_precos(produto.nome)
-
-    if analytics:
-        analytics = sorted(analytics, key=lambda x: x["valor_"])
 
     if request.method == "POST":
         produto = Produto.query.get_or_404(id)
@@ -55,6 +51,10 @@ def alterar_produto(id):
         produto.cor = request.form["cor"]
         db.session.commit()
 
+    analytics = analytics.pesquisa_precos(produto.nome)
+
+    if analytics:
+        analytics = sorted(analytics, key=lambda x: x["valor_"])
     return render_template("produto/alterar.html", produto=produto, analytics=analytics)
 
 
