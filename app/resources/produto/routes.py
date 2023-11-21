@@ -43,8 +43,8 @@ def alterar_produto(id):
     analytics = analytics.pesquisa_precos(produto.nome)
 
     if analytics:
-        analytics = sorted(analytics, key=lambda x: x['valor_'])
-    
+        analytics = sorted(analytics, key=lambda x: x["valor_"])
+
     if request.method == "POST":
         produto = Produto.query.get_or_404(id)
         produto.nome = (request.form["nome"],)
